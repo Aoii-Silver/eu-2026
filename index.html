@@ -63,6 +63,7 @@ button:hover{background:var(--ink);color:var(--paper)}
 .dhead .date{font-family:"Noto Serif TC",serif;font-size:30px;font-weight:700;color:var(--ct);line-height:1.1}
 .dhead .wk{font-size:12.5px;color:var(--muted);margin-bottom:8px}
 .tag{display:inline-block;font-size:11.5px;color:var(--on);background:var(--c);padding:1px 10px;border-radius:999px;letter-spacing:.12em}
+.dhead .mt{display:none}
 .dbody{padding:16px 22px 16px}
 .dbody h2{margin:0 0 8px;font-family:"Noto Serif TC",serif;font-size:19px;font-weight:600;letter-spacing:.05em;color:var(--ct);display:flex;align-items:center;gap:8px}
 .empty-day{color:var(--muted);font-size:13.5px;padding:4px 0}
@@ -93,10 +94,13 @@ button:hover{background:var(--ink);color:var(--paper)}
 
 /* 手機版：標籤列、編輯/刪除直排、長按拖曳排序 */
 @media(max-width:620px){
-  .dhead{display:flex;align-items:center;gap:10px;padding:12px 16px;border-right:0;border-bottom:1px solid var(--line)}
-  .dhead .date{font-size:26px}
-  .dhead .wk{margin:0;order:0}
-  .dhead .tag{margin-left:auto;order:2}
+  .dhead{display:flex;align-items:center;gap:14px;padding:12px 16px;border-right:0;border-bottom:1px solid var(--line)}
+  .dl{flex:none;display:grid;grid-template-columns:auto auto;grid-template-areas:"date wk" "tag tag";align-items:baseline;justify-content:start;column-gap:8px;row-gap:6px}
+  .dl .date{grid-area:date;font-size:26px}
+  .dl .wk{grid-area:wk;margin:0}
+  .dl .tag{grid-area:tag;justify-self:start}
+  .dhead .mt{display:flex!important;align-items:center;gap:6px;flex:1;min-width:0;margin:0;font-family:"Noto Serif TC",serif;font-size:17px;font-weight:600;letter-spacing:.04em;color:var(--ct);line-height:1.35}
+  .dbody>h2{display:none}
   .acts{flex-direction:row;gap:0;align-self:center;opacity:.7}
   .acts .mv{display:none}
   .acts .ib{padding:4px 8px;font-size:22px;line-height:1.2}
@@ -454,7 +458,7 @@ function render(){
     const empty = (!d.items.length && !adding) ? `<div class="empty-day">尚無項目，請用下方按鈕新增。</div>` : "";
     const btn = t => `<button class="addb" data-act="add" data-type="${t}" data-day="${d.id}">＋ ${t}</button>`;
     return `<article class="day ${d.c}" id="${d.id}">
-      <div class="dhead"><div class="date">${esc(d.date)}</div><div class="wk">（${esc(d.wk)}）</div><span class="tag">${COUNTRY[d.c]}</span></div>
+      <div class="dhead"><div class="dl"><div class="date">${esc(d.date)}</div><div class="wk">（${esc(d.wk)}）</div><span class="tag">${COUNTRY[d.c]}</span></div>${(form&&form.kind==="day"&&form.dayId===d.id)?"":dayTitleHTML(d).replace("<h2>","<h2 class=\"mt\">")}</div>
       <div class="dbody">${dayTitleHTML(d)}${list}${empty}${adding?formHTML(d,null):""}
         <div class="addbar">${btn("活動")}${btn("交通")}${btn("住宿")}${btn("備註")}</div>
       </div></article>`;
