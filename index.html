@@ -203,11 +203,6 @@ body.locked{overflow:hidden}
   </div>
   <div class="btns">
     <span class="sync" id="sync"></span>
-    <button id="btnExport">匯出 JSON</button>
-    <button id="btnImport">匯入</button>
-    <button id="btnReset">還原初始</button>
-    <button id="btnLock">上鎖</button>
-    <input type="file" id="file" accept="application/json" hidden>
   </div>
 </div>
 
@@ -602,21 +597,6 @@ function addPending(){
 document.getElementById("padd").onclick=addPending;
 ptext.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); addPending(); }});
 
-/* 匯出入 */
-document.getElementById("btnExport").onclick=()=>{
-  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
-  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="itinerary.json"; a.click(); toast("已匯出 itinerary.json");
-};
-document.getElementById("btnImport").onclick=()=>document.getElementById("file").click();
-document.getElementById("file").onchange=e=>{
-  const f=e.target.files[0]; if(!f) return; const r=new FileReader();
-  r.onload=()=>{ try{ const j=JSON.parse(r.result); if(!Array.isArray(j)||!j[0].items) throw 0; data=normalize(j); form=null; commit(); toast("匯入完成"); }catch(err){ toast("檔案格式不符（需為本頁匯出的 JSON）"); } };
-  r.readAsText(f);
-};
-document.getElementById("btnReset").onclick=()=>{
-  if(!confirm(CONFIGURED ? "要還原成初始行程嗎？所有旅伴的修改都會被覆蓋，且無法復原。" : "要還原成初始行程嗎？目前所有修改都會消失。")) return;
-  data=buildDefault(); form=null; commit(); toast("已還原");
-};
 /* ---------- 鑰匙孔密碼視窗 ---------- */
 const lock=document.getElementById("lock"), plate=document.getElementById("plate"),
       pw=document.getElementById("pw"), lockMsg=document.getElementById("lockMsg");
@@ -643,12 +623,6 @@ plate.addEventListener("submit", async e=>{
   if(error){ if(/invalid|credentials/i.test(error.message)) wrongPw(); else lockMsg.textContent="連線失敗，請稍後再試"; return; }
   hideLock(); await startRemote();
 });
-document.getElementById("btnLock").onclick=async()=>{
-  if(CONFIGURED && sb){ sb.removeAllChannels(); await sb.auth.signOut(); data=[]; synced={}; render(); setSync(""); }
-  else sessionStorage.removeItem("demo-open");
-  showLock();
-};
-
 async function boot(){
   render();
   if(!CONFIGURED){
