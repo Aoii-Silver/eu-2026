@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>六仙女的東歐探險</title>
+<title>《六仙女的東歐探險》</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -21,6 +21,8 @@ html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
 .wrap{max-width:980px;margin:0 auto;padding:0 20px 80px}
 header.hero{text-align:center;padding:60px 0 26px}
+.hero .eyebrow span{white-space:nowrap}
+@media(max-width:620px){.hero .eyebrow span{display:block}}
 .hero .eyebrow{font-family:Georgia,"Noto Serif TC",serif;font-style:italic;letter-spacing:.12em;font-size:14px;color:var(--muted)}
 .hero h1{font-family:"Noto Serif TC",serif;font-weight:700;font-size:clamp(30px,6vw,48px);margin:10px 0 6px;letter-spacing:.12em}
 .cpills{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:14px}
@@ -94,7 +96,7 @@ button:hover{background:var(--ink);color:var(--paper)}
 
 /* 手機版：標籤列、編輯/刪除直排、長按拖曳排序 */
 @media(max-width:620px){
-  .dhead{display:grid;grid-template-columns:auto auto 1fr;grid-template-areas:"date wk title" "tag tag tag";align-items:baseline;column-gap:4px;row-gap:6px;padding:12px 16px;border-right:0;border-bottom:1px solid var(--line)}
+  .dhead{display:grid;grid-template-columns:auto auto 1fr;grid-template-rows:auto 1fr;grid-template-areas:"date wk title" "tag tag title";align-items:baseline;column-gap:4px;row-gap:6px;padding:12px 16px;border-right:0;border-bottom:1px solid var(--line)}
   .dl{display:contents}
   .dl .date{grid-area:date;font-size:26px}
   .dl .wk{grid-area:wk;margin:0}
@@ -183,8 +185,8 @@ body.locked{overflow:hidden}
 <body>
 <div class="wrap">
 <header class="hero">
-  <div class="eyebrow">The Chang Sisters: A Second European Chapter</div>
-  <h1>六仙女的東歐探險</h1>
+  <div class="eyebrow"><span>The Chang Sisters:</span> <span>A Second European Chapter</span></div>
+  <h1>《六仙女的東歐探險》</h1>
   <div class="cpills">
     <button class="cpill cz" data-go="cz" title="跳到捷克的第一天">捷克</button>
     <button class="cpill at" data-go="at" title="跳到奧地利的第一天">奧地利</button>
@@ -193,14 +195,6 @@ body.locked{overflow:hidden}
 </header>
 
 <div class="toolbar">
-  <div class="legend">
-    <span><i style="background:var(--cz)"></i>捷克</span>
-    <span><i style="background:var(--at)"></i>奧地利</span>
-    <span><i style="background:var(--hu)"></i>匈牙利</span>
-    <span><i style="background:var(--tr)"></i>航程</span>
-    <span><i style="background:var(--alert)"></i>重要 ！</span>
-    <span><i style="background:var(--pend);opacity:.8"></i>待確認</span>
-  </div>
   <div class="btns">
     <span class="sync" id="sync"></span>
   </div>
