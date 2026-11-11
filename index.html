@@ -370,6 +370,13 @@ const dayKey = d => stable({id:d.id,date:d.date,wk:d.wk,c:d.c,title:d.title,item
 const toRow = (d,i) => ({id:d.id,pos:i,date:d.date,wk:d.wk,c:d.c,title:d.title,items:d.items,updated_at:new Date().toISOString()});
 const fromRow = r => ({id:r.id,date:r.date,wk:r.wk,c:r.c,title:r.title,items:r.items||[]});
 function setSync(t){ const el=document.getElementById("sync"); if(el) el.textContent=t; }
+let lastSaved=null;   // 資料庫中最近一次儲存的時間（任何人儲存都算）
+const p2=n=>String(n).padStart(2,"0");
+function syncOK(ts){
+  const t = ts ? new Date(ts) : new Date();
+  if(!isNaN(t) && (!lastSaved || t>lastSaved)) lastSaved=t;
+  setSync("● 已同步" + (lastSaved ? ` · 最後儲存 ${lastSaved.getMonth()+1}/${lastSaved.getDate()} ${p2(lastSaved.getHours())}:${p2(lastSaved.getMinutes())}` : ""));
+}
 
 function save(){
   if(!CONFIGURED){ try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){} return; }
@@ -383,7 +390,7 @@ async function push(){
   setSync("同步中…");
   const {error}=await sb.from("days").upsert(rows);
   if(error){ rows.forEach(r=>delete synced[r.id]); setSync("同步失敗"); toast("同步失敗，請檢查網路後再試一次"); console.error(error); }
-  else setSync("● 已同步");
+  else syncOK(new Date());
 }
 async function startRemote(){
   setSync("載入中…");
@@ -391,7 +398,7 @@ async function startRemote(){
   if(error){ setSync("載入失敗"); toast("無法讀取行程資料"); console.error(error); return; }
   if(!rows.length){ data=buildDefault(); synced={}; await push(); }
   else { data=normalize(rows.map(fromRow)); data.forEach(d=>{ synced[d.id]=dayKey(d); }); }
-  form=null; render(); setSync("● 已同步");
+  form=null; render(); lastSaved=null; rows.forEach(r=>{ if(r.updated_at) syncOK(r.updated_at); }); if(!lastSaved) syncOK(new Date());
   sb.removeAllChannels();
   sb.channel("days-live").on("postgres_changes",{event:"*",schema:"public",table:"days"},onRemote).subscribe();
 }
@@ -403,7 +410,7 @@ function onRemote(p){
   const i=data.findIndex(x=>x.id===d.id);
   if(i>=0) data[i]=d; else data.push(d);
   if(form){ toast("有旅伴更新了行程，完成編輯後會自動套用"); }
-  else { render(); setSync("● 已同步"); }
+  else { render(); syncOK(p.new.updated_at); }
 }
 let data = CONFIGURED ? [] : load();
 let form = null;   // {kind:'item', dayId, itemId|null, type} | {kind:'day', dayId}
