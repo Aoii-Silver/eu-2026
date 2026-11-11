@@ -63,7 +63,7 @@ button:hover{background:var(--ink);color:var(--paper)}
 .day.hu{--c:var(--hu);--cs:var(--hu-soft)} .day.tr{--c:var(--tr);--cs:var(--tr-soft)}
 .dhead{background:var(--cs);padding:18px 16px;border-right:1px solid var(--line)}
 .dhead .date{font-family:"Noto Serif TC",serif;font-size:30px;font-weight:700;color:var(--ct);line-height:1.1}
-.dhead .wk{font-size:12.5px;color:var(--muted);margin-bottom:8px}
+.dhead .wk{font-size:12.5px;color:var(--ct);opacity:.8;margin-bottom:8px}
 .tag{display:inline-block;font-size:11.5px;color:var(--on);background:var(--c);padding:1px 10px;border-radius:999px;letter-spacing:.12em}
 .dhead .mt{display:none}
 .dbody{padding:16px 22px 16px}
@@ -105,6 +105,19 @@ button:hover{background:var(--ink);color:var(--paper)}
   .dbody>h2{display:none}
   .acts{flex-direction:row;gap:0;align-self:center;opacity:.7}
   .acts .mv{display:none}
+  .dhead .mt{font-size:17.5px}
+  .item .tys.pendonly{visibility:visible}
+  .item .ty.tag-pend{display:block}
+  .item .pchk{display:none}
+  .pbox .ph{cursor:pointer;margin-bottom:8px}
+  .pbox h3::after{content:"▴";font-family:"Noto Sans TC";font-size:12px;margin-left:2px}
+  .pbox.collapsed{background:var(--pend);border-color:var(--pend);border-left:1px solid var(--pend);padding:12px 18px;margin-bottom:24px}
+  .pbox.collapsed .ph{margin-bottom:0}
+  .pbox.collapsed h3{color:#fff}
+  .pbox.collapsed h3::after{content:"▾"}
+  .pbox.collapsed h3 .n{background:#fff;color:var(--pend-ink)}
+  .pbox.collapsed .plus{border-color:#fff;color:#fff}
+  .pbox.collapsed .plist,.pbox.collapsed .pform{display:none!important}
   .acts .ib{padding:4px 8px;font-size:22px;line-height:1.2}
   .acts{opacity:.85}
   .item{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
@@ -114,6 +127,10 @@ button:hover{background:var(--ink);color:var(--paper)}
 .item.drop-before{box-shadow:0 -2px 0 var(--c)}
 .item.drop-after{box-shadow:0 2px 0 var(--c)}
 body.dragging{overflow-anchor:none}
+.by{display:inline-block;font-size:.8em;font-weight:500;line-height:1.5;padding:0 9px;margin-left:8px;border-radius:999px;background:var(--cs);color:var(--ct);border:1px solid var(--c);white-space:nowrap;vertical-align:1px;letter-spacing:.04em}
+.item.imp .by{background:#fff;color:var(--alert-deep);border-color:var(--alert)}
+.ty.tag-pend{display:none;background:var(--pend);border-color:var(--pend);color:#fff}
+.tys.pendonly{visibility:hidden}.tys.pendonly .tag-pend{display:block}
 .pchk{display:inline-flex;align-items:center;gap:5px;margin-left:10px;font-size:12px;color:#fff;background:var(--pend);border:0;padding:0 8px;border-radius:2px;cursor:pointer;white-space:nowrap}
 .pchk input{appearance:none;-webkit-appearance:none;width:12px;height:12px;border:0;border-radius:2px;background:rgba(255,255,255,.92);margin:0;cursor:pointer;position:relative}
 .pchk input:checked::after{content:"✓";position:absolute;inset:0;font-size:10px;line-height:12px;text-align:center;color:var(--pend);font-weight:700}
@@ -236,6 +253,7 @@ body.locked{overflow:hidden}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const COUNTRY = {cz:"捷克", at:"奧地利", hu:"匈牙利", tr:"航程"};
+const BOOKERS = ["柔訂","莉訂","恬訂","婷訂","佳訂","晏訂","黃訂","江訂"];
 const TYPES = ["活動","交通","住宿","備註"];
 const uid = () => Math.random().toString(36).slice(2,10);
 const TIME_RE = /^(\d{1,2}:\d{2}(?:～\d{1,2}:\d{2})?|\?\?:\?\?)\s*/;
@@ -309,7 +327,7 @@ const RAW = [
  ["d1225","12/25","五","tr","維也納 VIE → 桃園 TPE",[
   "??:?? 退房","交通：住宿至機場",
   "11:00 維也納 VIE → 桃園 TPE，中華航空 CI0064","飛行時間 11hr 35min"]],
- ["d1226","12/26","六","tr","抵達桃園",["05:35 抵達桃園"]]
+ ["d1226","12/26","六","tr","",["05:35 抵達桃園"]]
 ];
 
 function parseLines(lines){
@@ -402,11 +420,12 @@ function itemHTML(d,it){
   const impTag = it.important && it.type!=="備註";        // 備註標為重要時不加標籤
   const pchk = it.pending ? `<label class="pchk" title="確認後勾選"><input type="checkbox" data-act="confirm" data-day="${d.id}" data-item="${it.id}">待確認</label>` : "";
   const link = it.link ? `<a class="lnk" href="${esc(it.link)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>連結</a>` : "";
+  const by = it.by ? `<span class="by">${esc(it.by)}</span>` : "";
   const time = it.time ? `<span class="time">${esc(it.time)}</span>` : "";
   const a = (act,label,extra="",tip="") => `<button class="ib ${extra}" data-act="${act}" data-day="${d.id}" data-item="${it.id}" title="${tip}" aria-label="${tip||label}">${label}</button>`;
   return `<div class="${cls}" data-day="${d.id}" data-item="${it.id}">
-    ${(impTag || showTy) ? `<div class="tys">${impTag ?`<span class="ty tag-imp">重要！</span>` : ""}${showTy ? `<span class="ty ${it.type}">${it.type}</span>` : ""}</div>` : `<span class="ty-sp"></span>`}
-    <div class="main">${time}<span class="txt">${esc(it.text)}</span>${link}${pchk}</div>
+    ${(impTag || showTy || it.pending) ? `<div class="tys${(impTag||showTy)?"":" pendonly"}">${impTag ?`<span class="ty tag-imp">重要！</span>` : ""}${showTy ? `<span class="ty ${it.type}">${it.type}</span>` : ""}${it.pending ? `<span class="ty tag-pend">待確認</span>` : ""}</div>` : `<span class="ty-sp"></span>`}
+    <div class="main">${time}<span class="txt">${esc(it.text)}</span>${link}${by}${pchk}</div>
     <div class="acts">${a("up","↑","mv","上移")}${a("down","↓","mv","下移")}${a("edit","✎","","編輯")}${a("del","✕","del","刪除")}</div>
   </div>`;
 }
@@ -421,6 +440,9 @@ function formHTML(d,it){
     <div class="row">
       <div class="f2"><label>內容</label><input type="text" name="text" value="${esc(v.text)}" placeholder="${v.type==="交通"?"例：火車 17:03 Hallstatt → 維也納":v.type==="住宿"?"例：飯店名稱、取消規則":"例：活動內容"}"></div>
       <div class="f2"><label>連結（選填）</label><input type="text" name="link" value="${esc(v.link)}" placeholder="https://"></div>
+    </div>
+    <div class="row">
+      <div class="f1" style="max-width:160px"><label>誰訂票（選填）</label><select name="by"><option value="">（留空）</option>${BOOKERS.map(b=>`<option ${b===v.by?"selected":""}>${b}</option>`).join("")}</select></div>
     </div>
     <div class="chks">
       <label class="chk"><input type="checkbox" name="pending" ${v.pending?"checked":""}>待確認</label>
@@ -437,7 +459,7 @@ function dayTitleHTML(d){
       <div class="f1" style="max-width:150px"><label>國家色</label><select name="c">${Object.entries(COUNTRY).map(([k,v])=>`<option value="${k}" ${k===d.c?"selected":""}>${v}</option>`).join("")}</select></div></div>
       <div class="fb"><button class="ok" data-act="save-day" data-day="${d.id}">儲存</button><button data-act="cancel">取消</button></div></div>`;
   }
-  return `<h2>${esc(d.title)}<button class="ib" data-act="edit-day" data-day="${d.id}" title="編輯標題與國家色">✎</button></h2>`;
+  return d.title ? `<h2>${esc(d.title)}</h2>` : "";
 }
 
 function render(){
@@ -493,7 +515,7 @@ document.addEventListener("click", e=>{
   else if(act==="save-item"){
     const f=b.closest(".form"), q=n=>f.querySelector(`[name=${n}]`);
     const text=q("text").value.trim(); if(!text){ toast("請輸入內容"); q("text").focus(); return; }
-    const vals={type:q("type").value,time:q("time").value.trim(),text,link:q("link").value.trim(),important:q("important").checked,pending:q("pending").checked};
+    const vals={type:q("type").value,time:q("time").value.trim(),text,link:q("link").value.trim(),by:q("by").value,important:q("important").checked,pending:q("pending").checked};
     const target = f.dataset.item ? d.items.find(i=>i.id===f.dataset.item) : null;
     if(target) Object.assign(target, vals); else d.items.push({id:uid(),...vals});
     form=null; commit(); toast("已儲存");
@@ -580,6 +602,11 @@ document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{
 
 /* 待確認區：右上角＋ */
 const pform=document.getElementById("pform"), ptext=document.getElementById("ptext");
+(function(){ const box=document.getElementById("pbox"), mq=matchMedia("(max-width:620px)");
+  if(mq.matches) box.classList.add("collapsed");
+  box.querySelector(".ph").addEventListener("click",e=>{ if(!mq.matches||e.target.closest("#pplus")) return; box.classList.toggle("collapsed"); });
+  document.getElementById("pplus").addEventListener("click",()=>box.classList.remove("collapsed"));
+})();
 document.getElementById("pplus").onclick=()=>{ pform.classList.toggle("hidden"); if(!pform.classList.contains("hidden")) ptext.focus(); };
 document.getElementById("pcancel").onclick=()=>{ pform.classList.add("hidden"); ptext.value=""; };
 function addPending(){
