@@ -131,7 +131,7 @@ body.dragging{overflow-anchor:none}
 .item.imp .by{background:#fff;color:var(--alert-deep);border-color:var(--alert)}
 .ty.tag-pend{display:none;background:var(--pend);border-color:var(--pend);color:#fff}
 .tys.pendonly{visibility:hidden}.tys.pendonly .tag-pend{display:block}
-.pchk{display:inline-flex;align-items:center;gap:5px;margin-left:10px;font-size:12px;color:#fff;background:var(--pend);border:0;padding:0 8px;border-radius:2px;cursor:pointer;white-space:nowrap}
+.pchk{display:inline-flex;align-items:center;margin-left:10px;font-size:12px;color:#fff;background:var(--pend);border:0;padding:0 8px;border-radius:2px;white-space:nowrap}
 .pchk input{appearance:none;-webkit-appearance:none;width:12px;height:12px;border:0;border-radius:2px;background:rgba(255,255,255,.92);margin:0;cursor:pointer;position:relative}
 .pchk input:checked::after{content:"✓";position:absolute;inset:0;font-size:10px;line-height:12px;text-align:center;color:var(--pend);font-weight:700}
 
@@ -418,7 +418,7 @@ function itemHTML(d,it){
   const cls = ["item", it.important ? (it.type==="備註" ? "imp-note" : "imp") : "", it.pending?"pend":"", it.type==="備註"?"note":""].join(" ");
   const showTy = it.type==="交通" || it.type==="住宿";   // 活動、備註不顯示類別標籤
   const impTag = it.important && it.type!=="備註";        // 備註標為重要時不加標籤
-  const pchk = it.pending ? `<label class="pchk" title="確認後勾選"><input type="checkbox" data-act="confirm" data-day="${d.id}" data-item="${it.id}">待確認</label>` : "";
+  const pchk = it.pending ? `<span class="pchk">待確認</span>` : "";
   const link = it.link ? `<a class="lnk" href="${esc(it.link)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>連結</a>` : "";
   const by = it.by ? `<span class="by">${esc(it.by)}</span>` : "";
   const time = it.time ? `<span class="time">${esc(it.time)}</span>` : "";
