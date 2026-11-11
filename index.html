@@ -94,12 +94,12 @@ button:hover{background:var(--ink);color:var(--paper)}
 
 /* 手機版：標籤列、編輯/刪除直排、長按拖曳排序 */
 @media(max-width:620px){
-  .dhead{display:flex;align-items:center;gap:14px;padding:12px 16px;border-right:0;border-bottom:1px solid var(--line)}
-  .dl{flex:none;display:grid;grid-template-columns:auto auto;grid-template-areas:"date wk" "tag tag";align-items:baseline;justify-content:start;column-gap:8px;row-gap:6px}
+  .dhead{display:grid;grid-template-columns:auto auto 1fr;grid-template-areas:"date wk title" "tag tag tag";align-items:baseline;column-gap:4px;row-gap:6px;padding:12px 16px;border-right:0;border-bottom:1px solid var(--line)}
+  .dl{display:contents}
   .dl .date{grid-area:date;font-size:26px}
   .dl .wk{grid-area:wk;margin:0}
   .dl .tag{grid-area:tag;justify-self:start}
-  .dhead .mt{display:flex!important;align-items:center;gap:6px;flex:1;min-width:0;margin:0;font-family:"Noto Serif TC",serif;font-size:17px;font-weight:600;letter-spacing:.04em;color:var(--ct);line-height:1.35}
+  .dhead .mt{grid-area:title;display:flex!important;align-items:baseline;gap:5px;min-width:0;margin:0 0 0 6px;font-family:"Noto Serif TC",serif;font-size:16px;font-weight:600;letter-spacing:.02em;color:var(--ct);line-height:1.3}
   .dbody>h2{display:none}
   .acts{flex-direction:row;gap:0;align-self:center;opacity:.7}
   .acts .mv{display:none}
