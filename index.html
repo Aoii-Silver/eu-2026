@@ -78,6 +78,7 @@ button:hover{background:var(--ink);color:var(--paper)}
 .ty{font-size:11px;padding:0 8px;border:1px solid var(--c);color:var(--ct);border-radius:2px;letter-spacing:.08em;white-space:nowrap;align-self:start;margin-top:3px;background:var(--cs);min-width:52px;text-align:center}
 .ty.交通{background:transparent}
 .ty.住宿{background:var(--c);color:var(--on)}
+.ty.吃喝{background:var(--cs);color:var(--ct)}
 .ty-sp{min-width:52px;visibility:hidden}
 .tys{display:flex;flex-direction:column;gap:2px;align-self:start;margin-top:3px}
 .tys .ty{margin-top:0}
@@ -254,7 +255,7 @@ body.locked{overflow:hidden}
 <script>
 const COUNTRY = {cz:"捷克", at:"奧地利", hu:"匈牙利", tr:"航程"};
 const BOOKERS = ["柔訂","莉訂","恬訂","婷訂","佳訂","晏訂","黃訂","江訂"];
-const TYPES = ["活動","交通","住宿","備註"];
+const TYPES = ["活動","交通","住宿","吃喝","備註"];
 const uid = () => Math.random().toString(36).slice(2,10);
 const TIME_RE = /^(\d{1,2}:\d{2}(?:～\d{1,2}:\d{2})?|\?\?:\?\?)\s*/;
 const PEND_RE = /待確認|待安排|待補|[?？]/;
@@ -423,7 +424,7 @@ const findDay = id => data.find(d=>d.id===id);
 function itemHTML(d,it){
   if(form && form.kind==="item" && form.itemId===it.id) return formHTML(d,it);
   const cls = ["item", it.important ? (it.type==="備註" ? "imp-note" : "imp") : "", it.pending?"pend":"", it.type==="備註"?"note":""].join(" ");
-  const showTy = it.type==="交通" || it.type==="住宿";   // 活動、備註不顯示類別標籤
+  const showTy = it.type==="交通" || it.type==="住宿" || it.type==="吃喝";   // 活動、備註不顯示類別標籤
   const impTag = it.important && it.type!=="備註";        // 備註標為重要時不加標籤
   const pchk = it.pending ? `<span class="pchk">待確認</span>` : "";
   const link = it.link ? `<a class="lnk" href="${esc(it.link)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>連結</a>` : "";
@@ -445,7 +446,7 @@ function formHTML(d,it){
       <div class="f1" style="max-width:190px"><label>時間（選填）</label><input type="text" name="time" value="${esc(v.time)}" placeholder="10:30 或 10:30～12:00"></div>
     </div>
     <div class="row">
-      <div class="f2"><label>內容</label><input type="text" name="text" value="${esc(v.text)}" placeholder="${v.type==="交通"?"例：火車 17:03 Hallstatt → 維也納":v.type==="住宿"?"例：飯店名稱、取消規則":"例：活動內容"}"></div>
+      <div class="f2"><label>內容</label><input type="text" name="text" value="${esc(v.text)}" placeholder="${v.type==="交通"?"例：火車 17:03 Hallstatt → 維也納":v.type==="住宿"?"例：飯店名稱、取消規則":v.type==="吃喝"?"例：餐廳名稱、營業時間、訂位":"例：活動內容"}"></div>
       <div class="f2"><label>連結（選填）</label><input type="text" name="link" value="${esc(v.link)}" placeholder="https://"></div>
     </div>
     <div class="row">
@@ -478,7 +479,7 @@ function render(){
     return `<article class="day ${d.c}" id="${d.id}">
       <div class="dhead"><div class="dl"><div class="date">${esc(d.date)}</div><div class="wk">（${esc(d.wk)}）</div><span class="tag">${COUNTRY[d.c]}</span></div>${(form&&form.kind==="day"&&form.dayId===d.id)?"":dayTitleHTML(d).replace("<h2>","<h2 class=\"mt\">")}</div>
       <div class="dbody">${dayTitleHTML(d)}${list}${empty}${adding?formHTML(d,null):""}
-        <div class="addbar">${btn("活動")}${btn("交通")}${btn("住宿")}${btn("備註")}</div>
+        <div class="addbar">${btn("活動")}${btn("交通")}${btn("住宿")}${btn("吃喝")}${btn("備註")}</div>
       </div></article>`;
   }).join("");
   renderPending();
