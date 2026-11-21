@@ -110,15 +110,6 @@ button:hover{background:var(--ink);color:var(--paper)}
   .item .tys.pendonly{visibility:visible}
   .item .ty.tag-pend{display:block}
   .item .pchk{display:none}
-  .pbox .ph{cursor:pointer;margin-bottom:8px}
-  .pbox h3::after{content:"▴";font-family:"Noto Sans TC";font-size:12px;margin-left:2px}
-  .pbox.collapsed{background:var(--pend);border-color:var(--pend);border-left:1px solid var(--pend);padding:12px 18px;margin-bottom:24px}
-  .pbox.collapsed .ph{margin-bottom:0}
-  .pbox.collapsed h3{color:#fff}
-  .pbox.collapsed h3::after{content:"▾"}
-  .pbox.collapsed h3 .n{background:#fff;color:var(--pend-ink)}
-  .pbox.collapsed .plus{border-color:#fff;color:#fff}
-  .pbox.collapsed .plist,.pbox.collapsed .pform{display:none!important}
   .acts .ib{padding:4px 8px;font-size:22px;line-height:1.2}
   .acts{opacity:.85}
   .item{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
@@ -128,6 +119,15 @@ button:hover{background:var(--ink);color:var(--paper)}
 .item.drop-before{box-shadow:0 -2px 0 var(--c)}
 .item.drop-after{box-shadow:0 2px 0 var(--c)}
 body.dragging{overflow-anchor:none}
+.pbox .ph{cursor:pointer;margin-bottom:8px}
+.pbox h3::after{content:"▴";font-family:"Noto Sans TC";font-size:12px;margin-left:2px}
+.pbox.collapsed{background:var(--pend);border-color:var(--pend);border-left:1px solid var(--pend);padding:12px 18px;margin-bottom:24px}
+.pbox.collapsed .ph{margin-bottom:0}
+.pbox.collapsed h3{color:#fff}
+.pbox.collapsed h3::after{content:"▾"}
+.pbox.collapsed h3 .n{background:#fff;color:var(--pend-ink)}
+.pbox.collapsed .plus{border-color:#fff;color:#fff}
+.pbox.collapsed .plist,.pbox.collapsed .pform{display:none!important}
 .by{display:inline-block;font-size:.8em;font-weight:500;line-height:1.5;padding:0 9px;margin-left:8px;border-radius:999px;background:var(--cs);color:var(--ct);border:1px solid var(--c);white-space:nowrap;vertical-align:1px;letter-spacing:.04em}
 .item.imp .by{background:#fff;color:var(--alert-deep);border-color:var(--alert)}
 .ty.tag-pend{display:none;background:var(--pend);border-color:var(--pend);color:#fff}
@@ -611,8 +611,8 @@ document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{
 /* 待確認區：右上角＋ */
 const pform=document.getElementById("pform"), ptext=document.getElementById("ptext");
 (function(){ const box=document.getElementById("pbox"), mq=matchMedia("(max-width:620px)");
-  if(mq.matches) box.classList.add("collapsed");
-  box.querySelector(".ph").addEventListener("click",e=>{ if(!mq.matches||e.target.closest("#pplus")) return; box.classList.toggle("collapsed"); });
+  box.classList.add("collapsed");
+  box.querySelector(".ph").addEventListener("click",e=>{ if(e.target.closest("#pplus")) return; box.classList.toggle("collapsed"); });
   document.getElementById("pplus").addEventListener("click",()=>box.classList.remove("collapsed"));
 })();
 document.getElementById("pplus").onclick=()=>{ pform.classList.toggle("hidden"); if(!pform.classList.contains("hidden")) ptext.focus(); };
