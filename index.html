@@ -31,8 +31,6 @@ header.hero{text-align:center;padding:60px 0 26px}
 .cpill:hover{transform:translateY(-1px);box-shadow:0 3px 8px rgba(0,0,0,.18)}
 
 .toolbar{position:sticky;top:0;z-index:10;background:rgba(243,239,232,.93);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);margin:0 -20px 24px;padding:10px 20px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
-.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--muted);align-items:center}
-.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
 .btns{display:flex;gap:6px;flex-wrap:wrap}
 button{font:inherit;font-size:13px;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:5px 14px;border-radius:2px;cursor:pointer;letter-spacing:.06em;transition:.15s}
 button:hover{background:var(--ink);color:var(--paper)}
@@ -105,7 +103,6 @@ button:hover{background:var(--ink);color:var(--paper)}
   .dhead .mt{grid-area:title;display:flex!important;align-items:baseline;gap:5px;min-width:0;margin:0 0 0 6px;font-family:"Noto Serif TC",serif;font-size:16px;font-weight:600;letter-spacing:.02em;color:var(--ct);line-height:1.3}
   .dbody>h2{display:none}
   .acts{flex-direction:row;gap:0;align-self:center;opacity:.7}
-  .acts .mv{display:none}
   .dhead .mt{font-size:17.5px}
   .item .tys.pendonly{visibility:visible}
   .item .ty.tag-pend{display:block}
@@ -114,12 +111,31 @@ button:hover{background:var(--ink);color:var(--paper)}
   .acts{opacity:.85}
   .item{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 }
-.item.sel{box-shadow:inset 0 0 0 2px var(--c);border-radius:4px}
-.item.lift{position:relative;z-index:20;background:var(--paper);box-shadow:0 8px 22px rgba(0,0,0,.22);transition:none;opacity:.97}
-.item.imp.lift{background:var(--alert-bg)}
-.item.drop-before{box-shadow:0 -2px 0 var(--c)}
-.item.drop-after{box-shadow:0 2px 0 var(--c)}
+/* 群組（項目＋備註）、點選後的新增列、拖曳 */
+.grp{position:relative;border-radius:4px}
+.grp.lift{z-index:20;background:var(--paper);box-shadow:0 8px 22px rgba(0,0,0,.22);opacity:.97}
+.grp.drop-before{box-shadow:0 -2px 0 var(--c)}
+.grp.drop-after{box-shadow:0 2px 0 var(--c)}
+.grp.flash{animation:flash 1.4s ease}
 body.dragging{overflow-anchor:none}
+body.grabbing,body.grabbing *{cursor:grabbing!important;-webkit-user-select:none;user-select:none}
+.addbar.inline{margin:2px 0 8px 8px;padding-top:0;border-top:0}
+.form .nlabel{margin-top:12px}
+.nrow{padding:5px 0;border-top:1px dashed var(--line)}
+.nline{display:flex;gap:8px;align-items:center}
+.nline input[name=ntext]{flex:1;min-width:0}
+.nrow .nlink{margin-top:5px}
+.tgs.mainflags{display:flex;align-items:center;gap:6px;margin-top:12px;font-size:13px;color:var(--muted)}
+.mainflags .tglabel{margin-right:4px} .mainflags .tgname{margin-right:12px}
+.tg{flex:none;width:28px;height:28px;padding:0;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--muted);font-size:13px;font-weight:700;letter-spacing:0;display:inline-flex;align-items:center;justify-content:center;line-height:1}
+.tg:hover{background:#fff;color:var(--ink);border-color:var(--muted)}
+.tg.on.tg-link,.tg.on.tg-link:hover{background:var(--c);border-color:var(--c);color:#fff}
+.tg.on.tg-pend,.tg.on.tg-pend:hover{background:var(--pend);border-color:var(--pend);color:#fff}
+.tg.on.tg-imp,.tg.on.tg-imp:hover{background:var(--alert);border-color:var(--alert);color:#fff}
+.nline .tgs{display:flex;gap:5px}
+.nbtn{flex:none;width:28px;height:28px;padding:0;border-radius:50%;border:1px dashed var(--c);color:var(--ct);font-size:14px;letter-spacing:0;line-height:1}
+.nbtn:hover{background:var(--c);color:var(--on)}
+.byf select{margin-bottom:4px}
 .pbox .ph{cursor:pointer;margin-bottom:8px}
 .pbox h3::after{content:"▴";font-family:"Noto Sans TC";font-size:12px;margin-left:2px}
 .pbox.collapsed{background:var(--pend);border-color:var(--pend);border-left:1px solid var(--pend);padding:12px 18px;margin-bottom:24px}
@@ -134,8 +150,6 @@ body.dragging{overflow-anchor:none}
 .ty.tag-pend{display:none;background:var(--pend);border-color:var(--pend);color:#fff}
 .tys.pendonly{visibility:hidden}.tys.pendonly .tag-pend{display:block}
 .pchk{display:inline-flex;align-items:center;margin-left:10px;font-size:12px;color:#fff;background:var(--pend);border:0;padding:0 8px;border-radius:2px;white-space:nowrap}
-.pchk input{appearance:none;-webkit-appearance:none;width:12px;height:12px;border:0;border-radius:2px;background:rgba(255,255,255,.92);margin:0;cursor:pointer;position:relative}
-.pchk input:checked::after{content:"✓";position:absolute;inset:0;font-size:10px;line-height:12px;text-align:center;color:var(--pend);font-weight:700}
 
 /* 重要！ */
 .item.imp{background:var(--alert-bg);border-left-color:var(--alert);color:var(--alert-deep);font-weight:700;font-size:13.5px;padding:4px 8px}
@@ -157,11 +171,6 @@ body.dragging{overflow-anchor:none}
 .form label{display:block;font-size:12px;color:var(--muted);margin:6px 0 2px}
 input[type=text],select{width:100%;font:inherit;font-size:14px;padding:6px 9px;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:2px}
 .form .f1{flex:1;min-width:140px} .form .f2{flex:2;min-width:220px}
-.form .chk{display:flex;align-items:center;gap:6px;margin-top:10px;font-size:13.5px;color:var(--pend-ink);cursor:pointer}
-.form .chk input{accent-color:var(--pend)}
-.form .chks{display:flex;gap:20px;flex-wrap:wrap}
-.form .chk.imp{color:var(--alert);font-weight:700}
-.form .chk.imp input{accent-color:var(--alert)}
 .form .fb{display:flex;gap:8px;margin-top:12px}
 .form .fb .ok{background:var(--c);border-color:var(--c);color:var(--on)}
 
@@ -256,123 +265,67 @@ body.locked{overflow:hidden}
 <script>
 const COUNTRY = {cz:"捷克", at:"奧地利", hu:"匈牙利", tr:"航程"};
 const BOOKERS = ["柔訂","莉訂","恬訂","婷訂","佳訂","晏訂","黃訂","江訂"];
-const TYPES = ["活動","交通","住宿","吃喝","備註"];
+const GTYPES = ["活動","吃喝","交通","住宿"];        // 可帶備註的項目類別；「備註」則是獨立備註
 const uid = () => Math.random().toString(36).slice(2,10);
-const TIME_RE = /^(\d{1,2}:\d{2}(?:～\d{1,2}:\d{2})?|\?\?:\?\?)\s*/;
-const PEND_RE = /待確認|待安排|待補|[?？]/;
+const esc = s => String(s??"").replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const okLink = u => /^https?:\/\//i.test(u||"");
+const isNote = it => it.type==="備註";
+const tKey = t => { const m=/^(\d{1,2}):(\d{2})/.exec(t||""); return m ? (+m[1])*60+(+m[2]) : null; };
+const sameTs = (a,b) => !!a && !!b && +new Date(a)===+new Date(b);
 
-/* ---------- 初始資料（由原行程文字轉成結構化項目） ---------- */
-const RAW = [
- ["d1208","12/8","二","tr","出發前準備",[
-  "23:45 去程網路報到＋選位，餐點預訂！"]],
- ["d1210","12/10","四","tr","桃園 TPE → 布拉格 PRG",[
-  "23:45 中華航空 CI0067（一航）","飛行時間 14hr 40min"]],
- ["d1211","12/11","五","cz","布拉格 DAY 1",[
-  "07:25 抵達布拉格第一航廈","交通：大眾交通",
-  "住宿：Hlavní město Praha, Praha 1（柔訂，已過取消時間）",
-  "https://www.airbnb.com.tw/rooms/1025186242122142290",
-  "＊11:00 起可寄放行李，15:00 入住"]],
- ["d1212","12/12","六","cz","布拉格 DAY 2",["住宿：不變"]],
- ["d1213","12/13","日","cz","布拉格 DAY 3",["住宿：不變"]],
- ["d1214","12/14","一","cz","布拉格 → CK 小鎮",[
-  "10:00 退房，退房後不可寄放行李！",
-  "交通：巴士，約 3 小時（班次及購票狀態待確認）",
-  "住宿：Latran House 71 by KH（莉訂，歐洲時間 12/6 23:59 前可取消）€291.8 / 7 人",
-  "https://www.booking.com/hotel/cz/pension-rozmara1-2na.zh-tw.html",
-  "＊CK 入住時間 15:00～22:00"]],
- ["d1215","12/15","二","at","CK 小鎮 → 薩爾茲堡（姑丈一號加入）",[
-  "08:00～10:30 CK 退房",
-  "交通：10:45 → 13:45，EU Shuttle 點到點接送（已訂）",
-  "＊包車訂單現金尾款 €390",
-  "住宿：Hotel Salzburg-Hauptbahnhof（莉訂，歐洲時間 12/15 18:00 前可取消）",
-  "https://www.booking.com/hotel/at/h-hotel-salzburg.zh-tw.html",
-  "！當地付款 €523.81",
-  "！要跟飯店確認（原訂兩間四人房）",
-  "＊可先寄放行李，15:00 入住"]],
- ["d1216","12/16","三","at","薩爾茲堡 → 哈修塔特",[
-  "12:00 薩爾茲堡退房",
-  "交通：14:00 → 15:30（90min），EU Shuttle 點到點接送，8 人（已訂）",
-  "！包車現金尾款 €220，車上不接受信用卡",
-  "住宿：Seewirt Zauner（柔訂，已過免費取消時間）",
-  "＊入住時間 15:00～18:00",
-  "＊取消規則：11/16 前取消收 40%，12/9 前取消收 70%"]],
- ["d1217","12/17","四","at","哈修塔特 → 維也納",[
-  "11:00 哈修塔特退房（不含早餐）",
-  "渡輪：Hallstatt Markt → Hallstatt Bahnhof 火車站（15min）",
-  "！渡輪班次待確認！船票每人 €4，只收現金",
-  "火車：17:03 Hallstatt Bahnhst → 20:15 維也納西站 Wien Westbahnhof（3hr12min）",
-  "＊班次 IC1119，中停一站","＊全員 16 號車廂，64~67 / 94~97",
-  "住宿：HeyMi Apartments Zentagasse（恬訂，不可退）",
-  "https://www.booking.com/hotel/at/heymi-apartments-zentagasse-wien.zh-tw.html",
-  "！維也納西站至公寓的交通待安排","＊公寓入住時間 15:00"]],
- ["d1218","12/18","五","at","維也納 DAY 1",["19:30 黃金音樂廳","住宿：不變"]],
- ["d1219","12/19","六","at","維也納 DAY 2",["21:00 沃蒂夫教堂燈光秀","住宿：不變"]],
- ["d1220","12/20","日","hu","維也納 → 布達佩斯 DAY 0",[
-  "11:00 維也納退房",
-  "火車：11:40 維也納中央車站 Wien Hbf → 14:35 布達佩斯東站 Budapest-Keleti（2hr55min）（?訂）",
-  "＊全員 27 號車廂，班次 RJX61 直達，Railjet Xpress",
-  "地鐵：M4 前往 Kálvin tér 站（待確認）",
-  "住宿：布達佩斯宮殿區整套私有公寓（柔訂，12/13 前取消可退 50%）",
-  "https://www.airbnb.com.tw/rooms/40776910",
-  "＊15:00 入住，可寄放行李"]],
- ["d1221","12/21","一","hu","布達佩斯 DAY 1",["11:00 芭蕾舞《胡桃鉗》","住宿：不變"]],
- ["d1222","12/22","二","hu","布達佩斯 DAY 2",["住宿：不變"]],
- ["d1223","12/23","三","at","布達佩斯 → 維也納",[
-  "11:00 布達佩斯退房（行李寄放待確認）",
-  "11:00 華航回程 CI0064 網路報到＋選位（台灣時間 18:00）",
-  "交通：飯店到布達佩斯東站",
-  "火車：17:30 布達佩斯東站 Budapest-Keleti → 20:20 維也納中央車站 Wien Hbf（2hr50min）（?訂）",
-  "＊班次 RJX264 直達，Railjet Xpress",
-  "住宿：MOOONS Vienna（柔訂，不可取消）",
-  "＊15:00 入住，可寄放行李"]],
- ["d1224","12/24","四","at","維也納 DAY 3",["住宿：不變"]],
- ["d1225","12/25","五","tr","維也納 VIE → 桃園 TPE",[
-  "??:?? 退房","交通：住宿至機場",
-  "11:00 維也納 VIE → 桃園 TPE，中華航空 CI0064","飛行時間 11hr 35min"]],
- ["d1226","12/26","六","tr","",["05:35 抵達桃園"]]
-];
-
-function parseLines(lines){
-  const items=[]; let last=null;
-  lines.forEach(raw=>{
-    let s=raw.trim(); if(!s) return;
-    if(/^https?:\/\//.test(s)){ if(last) last.link=s; return; }
-    const important = /[！!]/.test(s);
-    s = s.replace(/^[！!]\s*/,"");
-    let type="活動", time="";
-    if(s.startsWith("＊")){ type="備註"; s=s.slice(1).trim(); }
-    else if(/^(交通|火車|渡輪|地鐵)[：:]/.test(s)){ type="交通"; s=s.replace(/^交通[：:]\s*/,""); }
-    else if(/^住宿[：:]/.test(s)){ type="住宿"; s=s.replace(/^住宿[：:]\s*/,""); }
-    if(!s) return;
-    if(type!=="備註"){ const m=s.match(TIME_RE); if(m){ time=m[1]; s=s.slice(m[0].length); } }
-    if(type==="活動" && /→|航空|飛行時間/.test(s)) type="交通";
-    const it={id:uid(),type,time,text:s,link:"",important,pending:PEND_RE.test(raw)};
-    items.push(it); last=it;
-  });
-  return items;
-}
-const buildDefault = () => RAW.map(([id,date,wk,c,title,lines])=>({id,date,wk,c,title,items:parseLines(lines)}));
-
-/* ---------- 儲存 ---------- */
-const KEY="eu2026-itinerary-v2";
-/* 相容舊資料：level>0 視為「重要」 */
-function normalize(arr){ arr.forEach(d=>d.items.forEach(it=>{ if(it.important===undefined) it.important=(it.level||0)>0; delete it.level; })); return arr; }
-function load(){ try{ const s=localStorage.getItem(KEY); if(s) return normalize(JSON.parse(s));}catch(e){} return buildDefault(); }
-/* ---------- Supabase 設定（填入後即為共編模式；留空 = 本機預覽） ---------- */
+/* ---------- Supabase 設定 ---------- */
 const SUPABASE_URL = "https://yehbfrgjyiwvapchilya.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_qdjZmLGkzKrjeWxDFc8zbQ_XvMz-iXD";   // 公開用金鑰，可放在前端；資料由 RLS 保護
 const SHARED_EMAIL = "trip@example.com";    // 在 Supabase Auth 建立的共用帳號（它的密碼＝旅伴共用密碼）
 const CONFIGURED = !!(SUPABASE_URL && SUPABASE_ANON_KEY);
-let sb = null, synced = {};
+const LOCAL_KEY = "eu2026-itinerary-v3";      // 只在本機預覽模式使用
+let sb = null;
 
-/* 穩定序列化：jsonb 會重排欄位順序，比對前先排序 */
-const stable = o => Array.isArray(o) ? "["+o.map(stable).join(",")+"]" :
-  (o && typeof o==="object") ? "{"+Object.keys(o).sort().map(k=>JSON.stringify(k)+":"+stable(o[k])).join(",")+"}" : JSON.stringify(o);
-const dayKey = d => stable({id:d.id,date:d.date,wk:d.wk,c:d.c,title:d.title,items:d.items});
-const toRow = (d,i) => ({id:d.id,pos:i,date:d.date,wk:d.wk,c:d.c,title:d.title,items:d.items,updated_at:new Date().toISOString()});
-const fromRow = r => ({id:r.id,date:r.date,wk:r.wk,c:r.c,title:r.title,items:r.items||[]});
+/* ---------- 狀態 ---------- */
+let data = [];          // [{id,pos,date,wk,c,title,items:[群組項目…, 獨立備註…]}]
+const ver = {};         // 每一天在資料庫的 updated_at（用來偵測同時編輯）
+let form = null;        // {kind:'item'|'note', dayId, id?, type?, after?, parent?}
+let selG = null;        // 目前點選的群組 id（只存在本機畫面）
+let noClickUntil = 0;   // 拖曳放開後，暫時忽略點擊
+
+/* 資料整理：群組項目一定有 notes 陣列；獨立備註一律排在當天最後 */
+function normDay(d){
+  d.items = Array.isArray(d.items) ? d.items : [];
+  d.items.forEach(it=>{
+    if(it.important===undefined) it.important=(it.level||0)>0; delete it.level;
+    if(isNote(it)) delete it.notes; else it.notes = Array.isArray(it.notes) ? it.notes : [];
+  });
+  tidy(d); return d;
+}
+function tidy(d){ d.items = [...d.items.filter(i=>!isNote(i)), ...d.items.filter(isNote)]; }
+const fromRow = r => normDay({id:r.id,pos:r.pos,date:r.date,wk:r.wk,c:r.c,title:r.title,items:r.items||[]});
+const findDay = id => data.find(d=>d.id===id);
+function putDay(nd){
+  const i=data.findIndex(x=>x.id===nd.id);
+  if(i>=0){ if(nd.pos==null) nd.pos=data[i].pos; data[i]=nd; } else data.push(nd);
+  data.sort((a,b)=>(a.pos??0)-(b.pos??0));
+}
+
+/* 插入位置：有時間依時間；沒時間放在 afterId 那組下方；都沒有就放在群組最後 */
+function placeGroup(d, g, afterId){
+  const groups=d.items.filter(i=>!isNote(i)), solos=d.items.filter(isNote), k=tKey(g.time);
+  let at=-1;
+  if(k!==null) at=groups.findIndex(x=>{ const kx=tKey(x.time); return kx!==null && kx>k; });
+  else if(afterId){ const j=groups.findIndex(x=>x.id===afterId); if(j>=0) at=j+1; }
+  if(at<0) at=groups.length;
+  groups.splice(at,0,g); d.items=[...groups,...solos];
+}
+/* 依 id 順序重排（拖曳用；重新套用到最新資料時也成立） */
+function reorder(d, ids, solo){
+  const part=d.items.filter(i=>isNote(i)===solo), rest=d.items.filter(i=>isNote(i)!==solo);
+  const rank=id=>{ const r=ids.indexOf(id); return r<0?1e9:r; };
+  part.sort((a,b)=>rank(a.id)-rank(b.id));
+  d.items = solo ? [...rest,...part] : [...part,...rest];
+}
+
+/* ---------- 同步狀態 ---------- */
 function setSync(t){ const el=document.getElementById("sync"); if(el) el.textContent=t; }
-let lastSaved=null;   // 資料庫中最近一次儲存的時間（任何人儲存都算）
+let lastSaved=null;
 const p2=n=>String(n).padStart(2,"0");
 function syncOK(ts){
   const t = ts ? new Date(ts) : new Date();
@@ -380,107 +333,195 @@ function syncOK(ts){
   setSync("● 已同步" + (lastSaved ? ` · 最後儲存 ${lastSaved.getMonth()+1}/${lastSaved.getDate()} ${p2(lastSaved.getHours())}:${p2(lastSaved.getMinutes())}` : ""));
 }
 
-function save(){
-  if(!CONFIGURED){ try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){} return; }
-  push();
+/* ---------- 修改與儲存 ----------
+   每個修改都寫成 op(day)：先套用在畫面上，再存到資料庫。
+   存檔時只在「那一天沒被別人改過」才寫入；若別人剛改過，就抓最新內容、重新套用 op 再存，
+   兩人的修改都會保留。op 回傳 false 表示要改的項目已不存在（例如被別人刪掉）。 */
+const GONE = "這個項目已被其他旅伴刪除，已載入最新內容";
+function mutate(dayId, op, msg){
+  const d=findDay(dayId); if(!d) return;
+  if(op(d)===false){ form=null; render(); toast(GONE); return; }
+  tidy(d); form=null; selG=null; render(); if(msg) toast(msg);
+  if(!CONFIGURED){ try{ localStorage.setItem(LOCAL_KEY, JSON.stringify(data)); }catch(e){} return; }
+  persist(dayId, op);
 }
-/* 只把有變動的那幾天寫回資料庫 */
-async function push(){
-  const rows=[];
-  data.forEach((d,i)=>{ const k=dayKey(d); if(synced[d.id]!==k){ synced[d.id]=k; rows.push(toRow(d,i)); } });
-  if(!rows.length) return;
+let queue=Promise.resolve();
+const inflight={}, missed={};   // 自己還沒存完的那幾天：先不讓即時同步覆蓋畫面，存完再補抓
+function persist(dayId, op){
+  inflight[dayId]=(inflight[dayId]||0)+1;
+  queue=queue.then(()=>writeDay(dayId, op)).catch(e=>console.error(e)).then(async()=>{
+    if(--inflight[dayId]>0 || !missed[dayId]) return;
+    missed[dayId]=false;
+    const {data:row}=await sb.from("days").select("*").eq("id",dayId).maybeSingle();
+    if(row && !inflight[dayId]){ ver[row.id]=row.updated_at; putDay(fromRow(row)); if(!form) render(); }
+  });
+}
+async function writeDay(dayId, op){
   setSync("同步中…");
-  const {error}=await sb.from("days").upsert(rows);
-  if(error){ rows.forEach(r=>delete synced[r.id]); setSync("同步失敗"); toast("同步失敗，請檢查網路後再試一次"); console.error(error); }
-  else syncOK(new Date());
+  for(let n=0;n<4;n++){
+    const d=findDay(dayId); if(!d) return;
+    const ts=new Date().toISOString();
+    let q=sb.from("days").update({items:d.items,updated_at:ts}).eq("id",dayId);
+    if(ver[dayId]) q=q.eq("updated_at",ver[dayId]);
+    const {data:res,error}=await q.select("updated_at");
+    if(error){ setSync("同步失敗"); toast("同步失敗，請檢查網路後重新整理"); console.error(error); return; }
+    if(res && res.length){ ver[dayId]=res[0].updated_at; syncOK(res[0].updated_at); return; }
+    /* 有人剛改過這一天：抓最新的，重新套用這次的修改 */
+    const {data:row,error:e2}=await sb.from("days").select("*").eq("id",dayId).maybeSingle();
+    if(e2 || !row){ setSync("同步失敗"); toast("這一天的資料已不存在，請重新整理"); return; }
+    ver[dayId]=row.updated_at;
+    const nd=fromRow(row), r=op(nd); putDay(nd); tidy(nd);
+    if(!form) render();
+    if(r===false){ toast(GONE); syncOK(row.updated_at); return; }
+  }
+  setSync("同步失敗"); toast("同步失敗，請重新整理後再試一次");
+}
+
+/* ---------- 讀取與即時同步 ---------- */
+async function loadAll(){
+  const {data:rows,error}=await sb.from("days").select("*").order("pos");
+  if(error){ setSync("載入失敗"); toast("無法讀取行程資料，請重新整理"); console.error(error); return false; }
+  if(!rows.length){ setSync("目前沒有行程資料"); return false; }   // 不再自動填入舊的初始資料
+  const keep=new Map(data.filter(d=>inflight[d.id]).map(d=>[d.id,d]));   // 還在存檔中的那幾天保留畫面上的版本
+  data=rows.map(r=>keep.get(r.id)||fromRow(r)); rows.forEach(r=>{ if(!keep.has(r.id)) ver[r.id]=r.updated_at; else missed[r.id]=true; });
+  lastSaved=null; rows.forEach(r=>syncOK(r.updated_at));
+  if(!form) render(); else renderPending();
+  return true;
 }
 async function startRemote(){
   setSync("載入中…");
-  const {data:rows,error}=await sb.from("days").select("*").order("pos");
-  if(error){ setSync("載入失敗"); toast("無法讀取行程資料"); console.error(error); return; }
-  if(!rows.length){ data=buildDefault(); synced={}; await push(); }
-  else { data=normalize(rows.map(fromRow)); data.forEach(d=>{ synced[d.id]=dayKey(d); }); }
-  form=null; render(); lastSaved=null; rows.forEach(r=>{ if(r.updated_at) syncOK(r.updated_at); }); if(!lastSaved) syncOK(new Date());
+  await loadAll();
   sb.removeAllChannels();
-  sb.channel("days-live").on("postgres_changes",{event:"*",schema:"public",table:"days"},onRemote).subscribe();
+  let first=true;
+  sb.channel("days-live")
+    .on("postgres_changes",{event:"*",schema:"public",table:"days"},onRemote)
+    .subscribe(st=>{ if(st==="SUBSCRIBED"){ if(!first) loadAll(); first=false; } });  // 斷線重連後重新抓一次
 }
 function onRemote(p){
-  if(!p.new || !p.new.id) return;
-  const d=fromRow(p.new); normalize([d]);
-  const k=dayKey(d); if(synced[d.id]===k) return;      // 自己剛送出的，略過
-  synced[d.id]=k;
-  const i=data.findIndex(x=>x.id===d.id);
-  if(i>=0) data[i]=d; else data.push(d);
-  if(form){ toast("有旅伴更新了行程，完成編輯後會自動套用"); }
-  else { render(); syncOK(p.new.updated_at); }
+  if(p.eventType==="DELETE"){
+    const id=p.old && p.old.id; if(!id) return;
+    data=data.filter(d=>d.id!==id); delete ver[id];
+    if(!form) render(); return;
+  }
+  const r=p.new; if(!r || !r.id) return;
+  if(sameTs(ver[r.id], r.updated_at)) return;          // 自己剛存的
+  if(inflight[r.id]){ missed[r.id]=true; return; }     // 自己還在存這一天，存完再補抓
+  ver[r.id]=r.updated_at; putDay(fromRow(r)); syncOK(r.updated_at);
+  if(form){ toast("有旅伴更新了行程，完成編輯後會自動套用"); renderPending(); } else render();
 }
-let data = CONFIGURED ? [] : load();
-let form = null;   // {kind:'item', dayId, itemId|null, type} | {kind:'day', dayId}
-
-const esc = s => String(s??"").replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const optList = (arr, sel) => arr.map((v,i)=>`<option value="${i}" ${i===sel?"selected":""}>${v}</option>`).join("");
-const findDay = id => data.find(d=>d.id===id);
+/* 手機休眠、切回分頁、網路恢復時重新抓最新資料 */
+document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible" && sb && data.length) loadAll(); });
+addEventListener("online",()=>{ if(sb && data.length) loadAll(); });
 
 /* ---------- 渲染 ---------- */
-function itemHTML(d,it){
-  if(form && form.kind==="item" && form.itemId===it.id) return formHTML(d,it);
-  const cls = ["item", it.important ? (it.type==="備註" ? "imp-note" : "imp") : "", it.pending?"pend":"", it.type==="備註"?"note":""].join(" ");
-  const showTy = it.type==="交通" || it.type==="住宿" || it.type==="吃喝";   // 活動、備註不顯示類別標籤
-  const impTag = it.important && it.type!=="備註";        // 備註標為重要時不加標籤
-  const pchk = it.pending ? `<span class="pchk">待確認</span>` : "";
-  const link = it.link ? `<a class="lnk" href="${esc(it.link)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>連結</a>` : "";
-  const by = it.by ? `<span class="by">${esc(it.by)}</span>` : "";
-  const time = it.time ? `<span class="time">${esc(it.time)}</span>` : "";
-  const a = (act,label,extra="",tip="") => `<button class="ib ${extra}" data-act="${act}" data-day="${d.id}" data-item="${it.id}" title="${tip}" aria-label="${tip||label}">${label}</button>`;
-  return `<div class="${cls}${selItem&&selItem.id===it.id?" sel":""}" data-day="${d.id}" data-item="${it.id}">
-    ${(impTag || showTy || it.pending) ? `<div class="tys${(impTag||showTy)?"":" pendonly"}">${impTag ?`<span class="ty tag-imp">重要！</span>` : ""}${showTy ? `<span class="ty ${it.type}">${it.type}</span>` : ""}${it.pending ? `<span class="ty tag-pend">待確認</span>` : ""}</div>` : `<span class="ty-sp"></span>`}
-    <div class="main">${time}<span class="txt">${esc(it.text)}</span>${link}${by}${pchk}</div>
-    <div class="acts">${a("up","↑","mv","上移")}${a("down","↓","mv","下移")}${a("edit","✎","","編輯")}${a("del","✕","del","刪除")}</div>
+const LINK_SVG = `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`;
+const linkHTML = u => okLink(u) ? `<a class="lnk" href="${esc(u)}" target="_blank" rel="noopener">${LINK_SVG}連結</a>` : "";
+const ib = (act,label,d,id,tip,extra="") => `<button class="ib ${extra}" data-act="${act}" data-day="${d.id}" data-item="${id}" title="${tip}" aria-label="${tip}">${label}</button>`;
+const acts = (d,id) => `<div class="acts">${ib("edit","✎",d,id,"編輯")}${ib("del","✕",d,id,"刪除","del")}</div>`;
+const tagCol = (labels, pending) => (labels || pending)
+  ? `<div class="tys${labels?"":" pendonly"}">${labels}${pending?`<span class="ty tag-pend">待確認</span>`:""}</div>`
+  : `<span class="ty-sp"></span>`;
+
+function mainRow(d,g){
+  const imp=g.important, labels=(imp?`<span class="ty tag-imp">重要！</span>`:"")+(g.type!=="活動"?`<span class="ty ${g.type}">${g.type}</span>`:"");
+  return `<div class="item${imp?" imp":""}${g.pending?" pend":""}">
+    ${tagCol(labels,g.pending)}
+    <div class="main">${g.time?`<span class="time">${esc(g.time)}</span>`:""}<span class="txt">${esc(g.text)}</span>${linkHTML(g.link)}${g.by?`<span class="by">${esc(g.by)}</span>`:""}${g.pending?`<span class="pchk">待確認</span>`:""}</div>
+    ${acts(d,g.id)}</div>`;
+}
+function noteRow(d,n,solo){
+  return `<div class="item note${n.important?" imp-note":""}${n.pending?" pend":""}">
+    ${tagCol("",n.pending)}
+    <div class="main">${solo&&n.time?`<span class="time">${esc(n.time)}</span>`:""}<span class="txt">${esc(n.text)}</span>${linkHTML(n.link)}${solo&&n.by?`<span class="by">${esc(n.by)}</span>`:""}${n.pending?`<span class="pchk">待確認</span>`:""}</div>
+    ${solo?acts(d,n.id):`<div class="acts"></div>`}</div>`;
+}
+const addBtns = (d,after) => [...GTYPES, ...(after?[]:["備註"])].map(t=>
+  `<button class="addb" data-act="add" data-type="${t}" data-day="${d.id}"${after?` data-after="${after}"`:""}>＋ ${t}</button>`).join("");
+
+function groupHTML(d,g){
+  if(form && form.dayId===d.id && form.id===g.id) return `<div class="grp">${itemForm(d,g)}</div>`;
+  const sel = selG===g.id && !form;
+  const adding = form && form.dayId===d.id && !form.id && form.after===g.id;
+  return `<div class="grp${sel?" sel":""}" data-day="${d.id}" data-g="${g.id}">
+    ${mainRow(d,g)}${g.notes.map(n=>noteRow(d,n,false)).join("")}
+    ${sel?`<div class="addbar inline">${addBtns(d,g.id)}</div>`:""}
+    ${adding?itemForm(d,null):""}
   </div>`;
 }
+function soloHTML(d,n){
+  if(form && form.dayId===d.id && form.id===n.id) return `<div class="grp solo">${itemForm(d,n)}</div>`;
+  return `<div class="grp solo" data-day="${d.id}" data-g="${n.id}">${noteRow(d,n,true)}</div>`;
+}
 
-function formHTML(d,it){
-  const isNew=!it; const v = it || {type:form.type,time:"",text:"",link:"",important:false,pending:false};
-  return `<div class="form" data-day="${d.id}" data-item="${it?it.id:""}">
+/* 表單裡的符號開關：連結、待確認、重要！（按一下反白＝開啟） */
+const TG = {
+  link:{cls:"tg-link",tip:"連結",label:`<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`},
+  pending:{cls:"tg-pend",tip:"待確認",label:"待"},
+  important:{cls:"tg-imp",tip:"重要！",label:"!"}
+};
+const tg = (f,on) => `<button type="button" class="tg ${TG[f].cls}${on?" on":""}" data-act="tg" data-f="${f}" title="${TG[f].tip}" aria-label="${TG[f].tip}" aria-pressed="${on?"true":"false"}">${TG[f].label}</button>`;
+const tgOn = (root,f) => { const b=root.querySelector(`:scope > .nline .tg[data-f="${f}"], :scope > .tgs .tg[data-f="${f}"]`); return !!(b && b.classList.contains("on")); };
+
+function noteRowEdit(n,last){
+  return `<div class="nrow" data-nid="${esc(n.id||"")}">
+    <div class="nline">
+      <input type="text" name="ntext" value="${esc(n.text)}" placeholder="備註內容">
+      <span class="tgs">${tg("link",!!n.link)}${tg("pending",n.pending)}${tg("important",n.important)}</span>
+      ${last?`<button type="button" class="nbtn" data-act="nrow-add" title="再加一則備註" aria-label="再加一則備註">＋</button>`
+            :`<button type="button" class="nbtn" data-act="nrow-del" title="刪掉這則備註" aria-label="刪掉這則備註">✕</button>`}
+    </div>
+    <input type="text" name="nlink" class="nlink${n.link?"":" hidden"}" value="${esc(n.link)}" placeholder="連結 https://">
+  </div>`;
+}
+const BLANK_NOTE = {text:"",link:"",pending:false,important:false};
+function fixRows(box){   // 最後一格顯示＋，其餘顯示✕
+  const rows=[...box.querySelectorAll(":scope > .nrow")];
+  rows.forEach((r,i)=>{ const last=i===rows.length-1, b=r.querySelector(".nbtn");
+    b.dataset.act=last?"nrow-add":"nrow-del"; b.textContent=last?"＋":"✕";
+    b.title=b.ariaLabel=last?"再加一則備註":"刪掉這則備註"; });
+}
+function bySelect(v){
+  const other = v && !BOOKERS.includes(v);
+  return `<select name="by"><option value="">（留空）</option>${BOOKERS.map(b=>`<option ${b===v?"selected":""}>${b}</option>`).join("")}<option value="__other" ${other?"selected":""}>其他（自行輸入）…</option></select>
+    <input type="text" name="byother" class="byother${other?"":" hidden"}" value="${other?esc(v):""}" placeholder="例：媽媽訂">`;
+}
+const PH = {交通:"例：火車 17:03 Hallstatt → 維也納",住宿:"例：飯店名稱",吃喝:"例：餐廳名稱",備註:"備註內容"};
+function itemForm(d,it){
+  const v = it || {type:form.type,time:"",text:"",link:"",by:"",important:false,pending:false,notes:[]};
+  const types = isNote(v) ? [...GTYPES,"備註"] : GTYPES;       // 只有獨立備註可以在「備註」和其他類別間切換
+  const notes = (v.notes && v.notes.length) ? v.notes : [BLANK_NOTE];
+  return `<div class="form" data-day="${d.id}">
     <div class="row">
-      <div class="f1" style="max-width:120px"><label>類別</label><select name="type">${TYPES.map(t=>`<option ${t===v.type?"selected":""}>${t}</option>`).join("")}</select></div>
+      <div class="f1" style="max-width:120px"><label>類別</label><select name="type">${types.map(t=>`<option ${t===v.type?"selected":""}>${t}</option>`).join("")}</select></div>
       <div class="f1" style="max-width:190px"><label>時間（選填）</label><input type="text" name="time" value="${esc(v.time)}" placeholder="10:30 或 10:30～12:00"></div>
+      <div class="f1 byf" style="max-width:200px"><label>誰訂票（選填）</label>${bySelect(v.by)}</div>
     </div>
     <div class="row">
-      <div class="f2"><label>內容</label><input type="text" name="text" value="${esc(v.text)}" placeholder="${v.type==="交通"?"例：火車 17:03 Hallstatt → 維也納":v.type==="住宿"?"例：飯店名稱、取消規則":v.type==="吃喝"?"例：餐廳名稱、營業時間、訂位":"例：活動內容"}"></div>
+      <div class="f2"><label>內容</label><input type="text" name="text" value="${esc(v.text)}" placeholder="${PH[v.type]||"例：參觀、集合、提醒"}"></div>
       <div class="f2"><label>連結（選填）</label><input type="text" name="link" value="${esc(v.link)}" placeholder="https://"></div>
     </div>
-    <div class="row">
-      <div class="f1" style="max-width:160px"><label>誰訂票（選填）</label><select name="by"><option value="">（留空）</option>${BOOKERS.map(b=>`<option ${b===v.by?"selected":""}>${b}</option>`).join("")}</select></div>
+    <div class="tgs mainflags"><span class="tglabel">標記</span>${tg("pending",v.pending)}<span class="tgname">待確認</span>${tg("important",v.important)}<span class="tgname">重要！</span></div>
+    <div class="nsec${isNote(v)?" hidden":""}">
+      <label class="nlabel">備註</label>
+      <div class="nrows">${notes.map((n,i)=>noteRowEdit(n,i===notes.length-1)).join("")}</div>
     </div>
-    <div class="chks">
-      <label class="chk"><input type="checkbox" name="pending" ${v.pending?"checked":""}>待確認</label>
-      <label class="chk imp"><input type="checkbox" name="important" ${v.important?"checked":""}>重要！</label>
-    </div>
-    <div class="fb"><button class="ok" data-act="save-item" data-day="${d.id}">${isNew?"新增":"儲存"}</button><button data-act="cancel">取消</button></div>
+    <div class="fb"><button class="ok" data-act="save-item" data-day="${d.id}">${it?"儲存":"新增"}</button><button data-act="cancel">取消</button></div>
   </div>`;
 }
 
-function dayTitleHTML(d){
-  if(form && form.kind==="day" && form.dayId===d.id){
-    return `<div class="form" data-day="${d.id}" style="width:100%">
-      <div class="row"><div class="f2"><label>標題</label><input type="text" name="title" value="${esc(d.title)}"></div>
-      <div class="f1" style="max-width:150px"><label>國家色</label><select name="c">${Object.entries(COUNTRY).map(([k,v])=>`<option value="${k}" ${k===d.c?"selected":""}>${v}</option>`).join("")}</select></div></div>
-      <div class="fb"><button class="ok" data-act="save-day" data-day="${d.id}">儲存</button><button data-act="cancel">取消</button></div></div>`;
-  }
-  return d.title ? `<h2>${esc(d.title)}</h2>` : "";
-}
+function dayTitle(d){ return d.title ? `<h2>${esc(d.title)}</h2>` : ""; }
 
 function render(){
   document.getElementById("days").innerHTML = data.map(d=>{
-    const adding = form && form.kind==="item" && form.dayId===d.id && !form.itemId;
-    const list = d.items.map(it=>itemHTML(d,it)).join("");
-    const empty = (!d.items.length && !adding) ? `<div class="empty-day">尚無項目，請用下方按鈕新增。</div>` : "";
-    const btn = t => `<button class="addb" data-act="add" data-type="${t}" data-day="${d.id}">＋ ${t}</button>`;
+    const groups=d.items.filter(i=>!isNote(i)), solos=d.items.filter(isNote);
+    const bottomForm = form && form.dayId===d.id && !form.id && !form.after;
+    const empty = (!d.items.length && !bottomForm) ? `<div class="empty-day">尚無項目，請用下方按鈕新增。</div>` : "";
     return `<article class="day ${d.c}" id="${d.id}">
-      <div class="dhead"><div class="dl"><div class="date">${esc(d.date)}</div><div class="wk">（${esc(d.wk)}）</div><span class="tag">${COUNTRY[d.c]}</span></div>${(form&&form.kind==="day"&&form.dayId===d.id)?"":dayTitleHTML(d).replace("<h2>","<h2 class=\"mt\">")}</div>
-      <div class="dbody">${dayTitleHTML(d)}${list}${empty}${adding?formHTML(d,null):""}
-        <div class="addbar">${btn("活動")}${btn("交通")}${btn("住宿")}${btn("吃喝")}${btn("備註")}</div>
+      <div class="dhead"><div class="dl"><div class="date">${esc(d.date)}</div><div class="wk">（${esc(d.wk)}）</div><span class="tag">${COUNTRY[d.c]||""}</span></div>${d.title?`<h2 class="mt">${esc(d.title)}</h2>`:""}</div>
+      <div class="dbody">${dayTitle(d)}
+        ${groups.map(g=>groupHTML(d,g)).join("")}${solos.map(n=>soloHTML(d,n)).join("")}${empty}
+        ${bottomForm?itemForm(d,null):""}
+        <div class="addbar">${addBtns(d,null)}</div>
       </div></article>`;
   }).join("");
   renderPending();
@@ -488,12 +529,11 @@ function render(){
 
 function renderPending(){
   const rows=[];
+  const row=(d,key,label,text)=>rows.push(`<li><input type="checkbox" id="p_${key}" data-act="confirm" data-day="${d.id}" data-key="${key}">
+      <a class="jump" href="#${d.id}">${esc(d.date)}</a><label for="p_${key}">${label}${esc(text)}</label></li>`);
   data.forEach(d=>d.items.forEach(it=>{
-    if(!it.pending) return;
-    const id=`p_${it.id}`;
-    rows.push(`<li><input type="checkbox" id="${id}" data-act="confirm" data-day="${d.id}" data-item="${it.id}">
-      <a class="jump" href="#${d.id}">${esc(d.date)}</a>
-      <label for="${id}">${it.time?esc(it.time)+" ":""}${esc(it.text)}</label></li>`);
+    if(it.pending) row(d,it.id,it.time?esc(it.time)+" ":"",it.text);
+    (it.notes||[]).forEach(n=>{ if(n.pending) row(d,it.id+"."+n.id,"",n.text); });
   }));
   document.getElementById("plist").innerHTML = rows.join("") || '<li class="empty">目前沒有待確認事項 🎉</li>';
   document.getElementById("pcount").textContent = rows.length;
@@ -504,62 +544,114 @@ function renderPending(){
 
 function toast(msg){
   const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show");
-  clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("show"),1800);
+  clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("show"),2200);
 }
-const commit = ()=>{ save(); render(); };
-/* 插入位置：有時間依時間，沒時間放在選取項目下方，否則放最後 */
-let selItem=null;   // {dayId,id}：只存在本機畫面
-const tKey = t => { const m=/^(\d{1,2}):(\d{2})/.exec(t||""); return m ? (+m[1])*60+(+m[2]) : null; };
-function placeItem(d, it, afterId){
-  const k=tKey(it.time);
-  if(k!==null){ const i=d.items.findIndex(x=>{ const kx=tKey(x.time); return kx!==null && kx>k; }); if(i>=0){ d.items.splice(i,0,it); return; } d.items.push(it); return; }
-  const j = afterId ? d.items.findIndex(x=>x.id===afterId) : -1;
-  if(j>=0) d.items.splice(j+1,0,it); else d.items.push(it);
+function flash(id){
+  requestAnimationFrame(()=>{ const el=document.querySelector(`[data-g="${id}"]`); if(!el) return;
+    el.scrollIntoView({block:"nearest",behavior:"smooth"}); el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); });
 }
 
-/* ---------- 事件 ---------- */
-let noClickUntil=0;
+/* ---------- 點擊 ---------- */
+function readLink(input){
+  const v=input.value.trim();
+  if(v && !okLink(v)){ toast("連結需以 http:// 或 https:// 開頭"); input.focus(); return null; }
+  return v;
+}
 document.addEventListener("click", e=>{
-  if(Date.now()<noClickUntil) return;
-  if(e.target.closest("[data-act],a,button,input,label,select,textarea,.form")) return;
-  const el=e.target.closest(".item[data-item]");
-  if(el && !form){
-    const same = selItem && selItem.id===el.dataset.item;
-    selItem = same ? null : {dayId:el.dataset.day,id:el.dataset.item};
-    document.querySelectorAll(".item.sel").forEach(x=>x.classList.remove("sel"));
-    if(!same){ el.classList.add("sel"); toast("已選取：沒填時間的新項目會放在這項下方"); }
-  } else if(selItem && !form){ selItem=null; document.querySelectorAll(".item.sel").forEach(x=>x.classList.remove("sel")); }
-});
-document.addEventListener("click", e=>{
-  const b=e.target.closest("[data-act]"); if(!b || b.tagName==="INPUT") return;
-  const act=b.dataset.act, d=findDay(b.dataset.day), idx = d ? d.items.findIndex(i=>i.id===b.dataset.item) : -1;
-  if(act==="add"){ form={kind:"item",dayId:d.id,itemId:null,type:b.dataset.type,after:(selItem&&selItem.dayId===d.id)?selItem.id:null}; render();
-    const f=document.querySelector(`#${d.id} .form [name=text]`); f && f.focus(); }
-  else if(act==="edit"){ form={kind:"item",dayId:d.id,itemId:b.dataset.item}; render(); }
-  else if(act==="edit-day"){ form={kind:"day",dayId:d.id}; render(); }
-  else if(act==="cancel"){ form=null; selItem=null; render(); }
+  if(Date.now()<noClickUntil){ e.preventDefault(); e.stopPropagation(); return; }
+  const b=e.target.closest("[data-act]");
+  if(b){ if(b.tagName!=="INPUT") onAct(b,e); return; }
+  if(form || e.target.closest("a,button,input,label,select,textarea,.form")) return;
+  /* 點選項目：在下方展開新增按鈕；再點一次或點別處收起 */
+  const g=e.target.closest(".grp[data-g]:not(.solo)");
+  const next = g && selG!==g.dataset.g ? g.dataset.g : null;
+  if(next!==selG){ selG=next; render(); }
+}, true);
+
+function onAct(b){
+  const act=b.dataset.act, d=findDay(b.dataset.day);
+  if(act==="add"){
+    form={dayId:d.id,type:b.dataset.type,after:b.dataset.after||null};
+    selG=null; render();
+    const f=document.querySelector(`#${d.id} .form [name=text]`); f && f.focus();
+  }
+  else if(act==="edit"){
+    const it=d.items.find(i=>i.id===b.dataset.item); if(!it) return;
+    form={dayId:d.id,id:it.id}; selG=null; render();
+  }
+  else if(act==="cancel"){ form=null; selG=null; render(); }
   else if(act==="del"){
-    if(confirm("確定刪除這個項目？")){ d.items.splice(idx,1); form=null; commit(); toast("已刪除"); } }
-  else if(act==="up" && idx>0){ [d.items[idx-1],d.items[idx]]=[d.items[idx],d.items[idx-1]]; commit(); }
-  else if(act==="down" && idx>=0 && idx<d.items.length-1){ [d.items[idx+1],d.items[idx]]=[d.items[idx],d.items[idx+1]]; commit(); }
-  else if(act==="save-item"){
-    const f=b.closest(".form"), q=n=>f.querySelector(`[name=${n}]`);
-    const text=q("text").value.trim(); if(!text){ toast("請輸入內容"); q("text").focus(); return; }
-    const vals={type:q("type").value,time:q("time").value.trim(),text,link:q("link").value.trim(),by:q("by").value,important:q("important").checked,pending:q("pending").checked};
-    const target = f.dataset.item ? d.items.find(i=>i.id===f.dataset.item) : null;
-    if(target){ const oldT=target.time; Object.assign(target, vals);
-      if(vals.time!==oldT && tKey(vals.time)!==null){ d.items.splice(d.items.indexOf(target),1); placeItem(d,target,null); } }
-    else placeItem(d,{id:uid(),...vals}, form&&form.after);
-    form=null; selItem=null; commit(); toast("已儲存");
+    const id=b.dataset.item;
+    if(confirm("確定刪除這個項目？（它底下的備註也會一起刪除）")) mutate(d.id, x=>{ x.items=x.items.filter(i=>i.id!==id); }, "已刪除");
   }
-  else if(act==="save-day"){
-    const f=b.closest(".form"); const t=f.querySelector("[name=title]").value.trim();
-    if(t) d.title=t; d.c=f.querySelector("[name=c]").value; form=null; commit(); toast("已儲存");
+  else if(act==="tg"){
+    const on=!b.classList.contains("on"); b.classList.toggle("on",on); b.setAttribute("aria-pressed",on);
+    if(b.dataset.f==="link"){                       // 連結：開啟時展開網址欄，關閉時收起並清空
+      const inp=b.closest(".nrow").querySelector("[name=nlink]");
+      inp.classList.toggle("hidden",!on); if(on) inp.focus(); else inp.value="";
+    }
+  }
+  else if(act==="nrow-add"){
+    const box=b.closest(".nrows");
+    box.insertAdjacentHTML("beforeend", noteRowEdit(BLANK_NOTE,true)); fixRows(box);
+    box.lastElementChild.querySelector("[name=ntext]").focus();
+  }
+  else if(act==="nrow-del"){ const box=b.closest(".nrows"); b.closest(".nrow").remove(); fixRows(box); }
+  else if(act==="save-item") saveItem(b, d);
+}
+
+/* 表單內：選「其他」時出現自行輸入欄；類別切到「備註」時收起備註區 */
+document.addEventListener("change", e=>{
+  const el=e.target, f=el.closest && el.closest(".form"); if(!f) return;
+  if(el.name==="by"){ const o=f.querySelector("[name=byother]"); o.classList.toggle("hidden",el.value!=="__other"); if(el.value==="__other") o.focus(); }
+  if(el.name==="type") f.querySelector(".nsec").classList.toggle("hidden",el.value==="備註");
+});
+
+function saveItem(b, d){
+  const f=b.closest(".form"), q=n=>f.querySelector(`[name=${n}]`);
+  const text=q("text").value.trim(); if(!text){ toast("請輸入內容"); q("text").focus(); return; }
+  const link=readLink(q("link")); if(link===null) return;
+  const by = q("by").value==="__other" ? q("byother").value.trim() : q("by").value;
+  const type=q("type").value, solo=type==="備註";
+  const notes=[];
+  if(!solo) for(const r of f.querySelectorAll(".nrows > .nrow")){
+    const nt=r.querySelector("[name=ntext]").value.trim(); if(!nt) continue;
+    const nl=tgOn(r,"link") ? readLink(r.querySelector("[name=nlink]")) : ""; if(nl===null) return;
+    notes.push({id:r.dataset.nid||uid(),text:nt,link:nl,pending:tgOn(r,"pending"),important:tgOn(r,"important")});
+  }
+  const vals={type,time:q("time").value.trim(),text,link,by,pending:tgOn(f,"pending"),important:tgOn(f,"important")};
+  if(!solo) vals.notes=notes;
+  if(form.id){
+    const id=form.id;
+    mutate(d.id, x=>{
+      const t=x.items.find(i=>i.id===id); if(!t) return false;
+      const wasSolo=isNote(t), moved=wasSolo!==solo || (vals.time!==t.time && tKey(vals.time)!==null);
+      Object.assign(t, structuredClone(vals)); if(solo) delete t.notes;
+      if(moved){ x.items=x.items.filter(i=>i!==t); if(solo) x.items.push(t); else placeGroup(x,t,null); }
+    }, "已儲存");
+    flash(id);
+  } else {
+    const g={id:uid(),...vals}, after=form.after;
+    mutate(d.id, x=>{ if(x.items.some(i=>i.id===g.id)) return;
+      if(solo) x.items.push(structuredClone(g)); else placeGroup(x,structuredClone(g),after); }, "已新增");
+    if(after && tKey(g.time)!==null) toast("有填時間，已依時間排列");
+    flash(g.id);
+  }
+}
+
+document.addEventListener("change", e=>{
+  const el=e.target;
+  if(el.dataset && el.dataset.act==="confirm" && el.checked){
+    const [iid,nid]=el.dataset.key.split(".");
+    mutate(el.dataset.day, x=>{
+      const it=x.items.find(i=>i.id===iid); if(!it) return false;
+      const t = nid ? (it.notes||[]).find(n=>n.id===nid) : it; if(!t) return false;
+      t.pending=false;
+    }, "已確認，已從待確認事項移除");
   }
 });
 
-
-/* ---------- 手機：長按拖曳排序（含觸覺回饋）---------- */
+/* ---------- 拖曳排序：手機長按 0.4 秒、電腦按住 0.25 秒（群組連同備註一起移動）---------- */
 function haptic(){
   try{ if(navigator.vibrate){ navigator.vibrate(15); return; } }catch(e){}
   try{ // iOS Safari 17.4+：切換 switch 型 checkbox 會產生觸覺回饋
@@ -569,59 +661,71 @@ function haptic(){
   }catch(e){}
 }
 (function(){
-  const mq = matchMedia("(max-width:620px)");
-  let lp=null;
+  let lp=null, lastTouch=0;
+  const BLOCK="button,a,input,label,textarea,select,.form";
   const clear=()=>{ if(!lp) return; clearTimeout(lp.timer); clearInterval(lp.scroller);
-    if(lp.on){ lp.el.classList.remove("lift"); lp.el.style.transform=""; lp.ids.forEach(x=>x.el.classList.remove("drop-before","drop-after")); document.body.classList.remove("dragging"); }
+    if(lp.on){ lp.el.classList.remove("lift"); lp.el.style.transform="";
+      lp.list.forEach(x=>x.classList.remove("drop-before","drop-after")); document.body.classList.remove("dragging","grabbing"); }
     lp=null; };
+  function begin(el,x,y,mouse){
+    clear();
+    if(form || !el || el.classList.contains("editing")) return;
+    lp={el,x,y,cy:y,mouse,on:false,timer:setTimeout(start, mouse?250:400)};
+  }
   function start(){
-    if(!lp) return; const art=lp.el.closest(".day");
-    lp.ids=[...art.querySelectorAll(".item[data-item]")].map(el=>({el,id:el.dataset.item}));
-    lp.from=lp.ids.findIndex(x=>x.el===lp.el); lp.over=lp.from; lp.sy=scrollY; lp.cy=lp.y;
-    lp.on=true; haptic(); lp.el.classList.add("lift"); document.body.classList.add("dragging");
+    if(!lp) return;
+    const solo=lp.el.classList.contains("solo"), art=lp.el.closest(".day");
+    lp.list=[...art.querySelectorAll(solo?".grp.solo[data-g]":".grp[data-g]:not(.solo)")];
+    lp.from=lp.list.indexOf(lp.el); lp.over=lp.from; lp.sy=scrollY; lp.solo=solo;
+    if(lp.list.length<2){ lp=null; return; }
+    lp.on=true; lp.el.classList.add("lift"); document.body.classList.add("dragging");
+    if(lp.mouse){ document.body.classList.add("grabbing"); try{ getSelection().removeAllRanges(); }catch(e){} } else haptic();
     lp.scroller=setInterval(()=>{ if(!lp||!lp.on) return; const h=innerHeight;
       if(lp.cy<70) scrollBy(0,-9); else if(lp.cy>h-90) scrollBy(0,9); else return; update(); },16);
   }
   function update(){
     lp.el.style.transform=`translateY(${lp.cy-lp.y+(scrollY-lp.sy)}px)`;
-    let over=lp.over; const first=lp.ids[0].el.getBoundingClientRect(), last=lp.ids[lp.ids.length-1].el.getBoundingClientRect();
-    if(lp.cy<first.top) over=0; else if(lp.cy>last.bottom) over=lp.ids.length-1;
-    else lp.ids.forEach((x,i)=>{ const r=x.el.getBoundingClientRect(); if(lp.cy>=r.top&&lp.cy<=r.bottom) over=i; });
-    if(over!==lp.over){ lp.over=over; haptic(); }
-    lp.ids.forEach((x,i)=>{ x.el.classList.toggle("drop-before",i===over&&over<lp.from); x.el.classList.toggle("drop-after",i===over&&over>lp.from); });
+    let over=lp.over; const L=lp.list, first=L[0].getBoundingClientRect(), last=L[L.length-1].getBoundingClientRect();
+    if(lp.cy<first.top) over=0; else if(lp.cy>last.bottom) over=L.length-1;
+    else L.forEach((x,i)=>{ if(x===lp.el) return; const r=x.getBoundingClientRect(); if(lp.cy>=r.top&&lp.cy<=r.bottom) over=i; });
+    if(over!==lp.over){ lp.over=over; if(!lp.mouse) haptic(); }
+    L.forEach((x,i)=>{ x.classList.toggle("drop-before",i===over&&over<lp.from); x.classList.toggle("drop-after",i===over&&over>lp.from); });
   }
+  function finish(){
+    const was=lp&&lp.on;
+    if(was && lp.over!==lp.from){
+      const ids=lp.list.map(x=>x.dataset.g), [m]=ids.splice(lp.from,1); ids.splice(lp.over,0,m);
+      const dayId=lp.el.dataset.day, solo=lp.solo; clear();
+      mutate(dayId, x=>reorder(x, ids, solo), "已調整順序");
+    } else clear();
+    if(was) noClickUntil=Date.now()+400;
+  }
+  /* 觸控 */
   document.addEventListener("touchstart",e=>{
-    clear();
-    if(!mq.matches||e.touches.length!==1||form) return;
-    const el=e.target.closest(".item[data-item]"); if(!el||e.target.closest("button,a,input,label,textarea,select")) return;
-    const t=e.touches[0]; lp={el,x:t.clientX,y:t.clientY,cy:t.clientY,on:false,timer:setTimeout(start,380)};
+    lastTouch=Date.now();
+    if(e.touches.length!==1 || e.target.closest(BLOCK)){ clear(); return; }
+    const t=e.touches[0]; begin(e.target.closest(".grp[data-g]"),t.clientX,t.clientY,false);
   },{passive:true});
   document.addEventListener("touchmove",e=>{
     if(!lp) return; const t=e.touches[0];
     if(!lp.on){ if(Math.hypot(t.clientX-lp.x,t.clientY-lp.y)>10) clear(); return; }
     e.preventDefault(); lp.cy=t.clientY; update();
   },{passive:false});
-  const end=()=>{
-    if(lp&&lp.on&&lp.over!==lp.from){
-      const d=findDay(lp.el.dataset.day), fromId=lp.ids[lp.from].id, overId=lp.ids[lp.over].id;
-      const fi=d.items.findIndex(i=>i.id===fromId), oi=d.items.findIndex(i=>i.id===overId);
-      clear();
-      if(fi>=0&&oi>=0){ const [m]=d.items.splice(fi,1); d.items.splice(oi,0,m); commit(); toast("已調整順序"); }
-      return;
-    }
-    clear();
-  };
-  document.addEventListener("touchend",e=>{ const was=lp&&lp.on; end(); if(was) noClickUntil=Date.now()+400; }); document.addEventListener("touchcancel",clear);
-  document.addEventListener("contextmenu",e=>{ if(mq.matches&&e.target.closest(".item")) e.preventDefault(); });
+  document.addEventListener("touchend",finish);
+  document.addEventListener("touchcancel",clear);
+  /* 滑鼠 */
+  document.addEventListener("mousedown",e=>{
+    if(e.button!==0 || Date.now()-lastTouch<800 || e.target.closest(BLOCK)) return;
+    begin(e.target.closest(".grp[data-g]"),e.clientX,e.clientY,true);
+  });
+  document.addEventListener("mousemove",e=>{
+    if(!lp || !lp.mouse) return;
+    if(!lp.on){ if(Math.hypot(e.clientX-lp.x,e.clientY-lp.y)>5) clear(); return; }
+    e.preventDefault(); lp.cy=e.clientY; update();
+  });
+  document.addEventListener("mouseup",()=>{ if(lp && lp.mouse) finish(); });
+  document.addEventListener("contextmenu",e=>{ if(lp || (matchMedia("(max-width:620px)").matches && e.target.closest(".item"))) e.preventDefault(); });
 })();
-
-document.addEventListener("change", e=>{
-  const el=e.target;
-  if(el.dataset && el.dataset.act==="confirm"){
-    const d=findDay(el.dataset.day), it=d.items.find(i=>i.id===el.dataset.item);
-    if(el.checked){ it.pending=false; commit(); toast("已確認，已從待確認事項移除"); }
-  }
-});
 
 /* 標題國家色塊：跳到該國第一天 */
 document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{
@@ -632,20 +736,17 @@ document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{
   el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
 });
 
-/* 待確認區：右上角＋ */
-const pform=document.getElementById("pform"), ptext=document.getElementById("ptext");
-(function(){ const box=document.getElementById("pbox"), mq=matchMedia("(max-width:620px)");
-  box.classList.add("collapsed");
-  box.querySelector(".ph").addEventListener("click",e=>{ if(e.target.closest("#pplus")) return; box.classList.toggle("collapsed"); });
-  document.getElementById("pplus").addEventListener("click",()=>box.classList.remove("collapsed"));
-})();
-document.getElementById("pplus").onclick=()=>{ pform.classList.toggle("hidden"); if(!pform.classList.contains("hidden")) ptext.focus(); };
+/* 待確認區：預設收合；右上角＋新增獨立備註 */
+const pbox=document.getElementById("pbox"), pform=document.getElementById("pform"), ptext=document.getElementById("ptext");
+pbox.classList.add("collapsed");
+pbox.querySelector(".ph").addEventListener("click",e=>{ if(!e.target.closest("#pplus")) pbox.classList.toggle("collapsed"); });
+document.getElementById("pplus").onclick=()=>{ pbox.classList.remove("collapsed"); pform.classList.toggle("hidden"); if(!pform.classList.contains("hidden")) ptext.focus(); };
 document.getElementById("pcancel").onclick=()=>{ pform.classList.add("hidden"); ptext.value=""; };
 function addPending(){
   const text=ptext.value.trim(); if(!text){ toast("請輸入待確認內容"); return; }
-  const d=findDay(document.getElementById("pday").value);
-  d.items.push({id:uid(),type:"備註",time:"",text,link:"",important:false,pending:true});
-  ptext.value=""; commit(); toast(`已新增到 ${d.date}`);
+  const d=findDay(document.getElementById("pday").value); if(!d) return;
+  const n={id:uid(),type:"備註",time:"",text,link:"",important:false,pending:true};
+  ptext.value=""; mutate(d.id, x=>{ if(!x.items.some(i=>i.id===n.id)) x.items.push({...n}); }, `已新增到 ${d.date}`);
 }
 document.getElementById("padd").onclick=addPending;
 ptext.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); addPending(); }});
@@ -677,17 +778,18 @@ plate.addEventListener("submit", async e=>{
   hideLock(); await startRemote();
 });
 async function boot(){
-  render();
-  if(!CONFIGURED){
-    setSync("本機預覽（尚未連線 Supabase）");
+  if(!CONFIGURED){                                 // 本機預覽（測試用）
+    try{ data=(JSON.parse(localStorage.getItem(LOCAL_KEY))||[]).map(normDay); }catch(e){ data=[]; }
+    render(); setSync("本機預覽（尚未連線 Supabase）");
     document.getElementById("lockDemo").textContent="預覽模式：輸入任意密碼即可進入";
     if(sessionStorage.getItem("demo-open")) hideLock(true);
     return;
   }
+  render();
   if(!window.supabase){ showLock("無法載入 Supabase，請檢查網路"); return; }
   sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
   const {data:{session}}=await sb.auth.getSession();
-  if(session){ hideLock(true); await startRemote(); }
+  if(session){ hideLock(true); await startRemote(); } else showLock();
 }
 boot();
 </script>
