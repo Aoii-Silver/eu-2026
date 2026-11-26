@@ -126,7 +126,7 @@ body.grabbing,body.grabbing *{cursor:grabbing!important;-webkit-user-select:none
 .nline input[name=ntext]{flex:1;min-width:0}
 .nrow .nlink{margin-top:5px}
 .tgs.mainflags{display:flex;align-items:center;gap:6px;margin-top:12px;font-size:13px;color:var(--muted)}
-.mainflags .tglabel{margin-right:4px} .mainflags .tgname{margin-right:12px}
+
 .tg{flex:none;width:28px;height:28px;padding:0;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--muted);font-size:13px;font-weight:700;letter-spacing:0;display:inline-flex;align-items:center;justify-content:center;line-height:1}
 .tg:hover{background:#fff;color:var(--ink);border-color:var(--muted)}
 .tg.on.tg-link,.tg.on.tg-link:hover{background:var(--c);border-color:var(--c);color:#fff}
@@ -500,7 +500,7 @@ function itemForm(d,it){
       <div class="f2"><label>內容</label><input type="text" name="text" value="${esc(v.text)}" placeholder="${PH[v.type]||"例：參觀、集合、提醒"}"></div>
       <div class="f2"><label>連結（選填）</label><input type="text" name="link" value="${esc(v.link)}" placeholder="https://"></div>
     </div>
-    <div class="tgs mainflags"><span class="tglabel">標記</span>${tg("pending",v.pending)}<span class="tgname">待確認</span>${tg("important",v.important)}<span class="tgname">重要！</span></div>
+    <div class="tgs mainflags">${tg("pending",v.pending)}${tg("important",v.important)}</div>
     <div class="nsec${isNote(v)?" hidden":""}">
       <label class="nlabel">備註</label>
       <div class="nrows">${notes.map((n,i)=>noteRowEdit(n,i===notes.length-1)).join("")}</div>
